@@ -1,0 +1,26 @@
+Cài đặt dự án php (codeigniter) + mysql + xampp
+Windows:
+Có thể theo hướng dẫn: https://www.youtube.com/watch?v=wDJ1rIbYjPg
+Linux ubuntu:
+Có thể theo hướng dẫn: https://www.youtube.com/watch?v=FSXtgdUzV_8
+
+Nhiệm vụ:
+-  thực hiện triển khai một project nhỏ về quản lý một shop bán hàng.
+Phần 1: Admin trang quản lý
+  + Quản lý sản phẩm (danh sách, tạo mới, xem chi tiết, chỉnh sửa) - có phân trang, upload ảnh
+  + Quản lý danh mục (danh sách, tạo mới, xem chi tiết, chỉnh sửa) - có phân trang
+  + Quản lý đơn hàng (danh sách, tạo mới, xem chi tiết, chỉnh sửa) - có phân trang
+  + Chi tiết đơn hàng (danh sách, tạo mới, xem chi tiết, chỉnh sửa) - có phân trang
+  + Quản lý tài khoản (danh sách, tạo mới, xem chi tiết, chỉnh sửa) - có phân trang
+  + Đăng nhập admin / cập nhật tài khoản đăng nhập
+
+Phần 2: Trang khách (trang giới thiệu bán hàng)
+  + Trang chủ (lên danh sách sản phẩm)
+  + Trang danh mục (liệt kê sản phẩm theo danh mục) - có phân trang
+  + Trang chi tiết sản phẩm ( thông tin sản phẩm, cho phép đặt hàngg)
+  + Trang đặt hàng (đơn hàng, đơn hàng chi tiết và đặt hàng lưu thông tin đặt hàng vào db)
+  + Trang đăng ký / đăng nhập
+
+* Chú ý: 
+- Dựa vào mẫu template html css adminlte3 để làm giao diện (custom những giao diện đơn giản cần thiết cho phần admin - phục vụ quản lý)
+- Php sửa dụng framework codeiginter 4 để triển khai dễ dàng hơn phần router (giao diện) - https://codeigniter.com/
