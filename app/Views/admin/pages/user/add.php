@@ -54,11 +54,19 @@
                         <input name="zip" type="text" id="zip"  class="form-control" value="<?= old('zip') ?>"  pattern="[0-9]{5}" placeholder="Nhập zip" required>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label for="state">Tỉnh</label>
-                      <input name="state" type="text" class="form-control" value="<?= old('state') ?>" id="state" placeholder="Nhập tỉnh">
+
+                    <div style="display: flex;">
+                      <div class="form-group">
+                        <label for="city">Thành phố</label>
+                        <input name="city" type="text" class="form-control" value="<?= old('city') ?>" id="city" placeholder="Nhập thành phố">
+                      </div>
+                      <div class="form-group">
+                        <label for="state">Tỉnh</label>
+                        <input name="state" type="text" class="form-control" value="<?= old('state') ?>" id="state" placeholder="Nhập tỉnh">
+                      </div>
+                      
                     </div>
-                    
+
                       <!-- /.form-group -->
                   </div>
                   <!-- /.col -->

@@ -3,19 +3,35 @@
 namespace App\Services;
 use App\Models\UserModel;
 use App\Common\ResultUtils;
+use Exception;
+
 class UserService extends BaseService
 {
     private $users;
     function __construct(){
         parent::__construct();
         $this->users = new UserModel();
+        $this->users->protect(false);
     }
 
     function getAllUsers(){
         return $this->users->findAll();
     }
     
+
     function addUserInfo($requestData){
+        function generateRandomCode($length) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $code = '';
+            $charactersLength = strlen($characters);
+            
+            for ($i = 0; $i < $length; $i++) {
+                $code .= $characters[mt_rand(0, $charactersLength - 1)];
+            }
+            
+            return $code;
+        }
+
         $validate = $this->validateAddUser($requestData);
         if ($validate->getErrors()){
             return [
@@ -24,12 +40,42 @@ class UserService extends BaseService
                 'messages' => $validate->getErrors()
             ];
         }
-        dd($requestData);
-        return [
-            'status' => ResultUtils::STATUS_CODE_OK,
-            'messageCode' => ResultUtils::MESSAGE_CODE_OK,
-            'messages' => ['success' => 'Thêm dữ liệu thành công']
+        $dataSave = $requestData->getPost();
+    
+        $dataToSave = [
+            'UserEmail' => $dataSave['email'],
+            'UserPassword' => password_hash( $dataSave['password'],PASSWORD_BCRYPT),
+            'UserFirstName' => $dataSave['firstName'],
+            'UserLastName' => $dataSave['lastName'],
+            'UserCity' => $dataSave['city'],
+            'UserState' => $dataSave['state'],
+            'UserZip' => $dataSave['zip'],
+            'UserEmailVerified' => 1, // Giả sử mặc định đã xác minh email
+            'UserRegistrationDate' => date('Y-m-d H:i:s'), // Thêm ngày đăng ký
+            'UserVerificationCode' =>  generateRandomCode(10),
+            'UserIP' => $_SERVER['REMOTE_ADDR'], // Lấy IP của người dùng
+            'UserPhone' => $dataSave['phone'],
+            'UserFax' => $dataSave['fax'],
+            'UserCountry' => $dataSave['country'],
+            'UserAddress' => $dataSave['address'],
+            'UserAddress2' => $dataSave['address2'],
+            'UserIsAdmin' => 0, // Giả sử không phải admin
         ];
+    
+        try{
+            $this->users->save($dataToSave);
+            return [
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'messageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'messages' => ['success' => 'Thêm dữ liệu thành công']
+            ];
+        } catch (Exception $e){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'messageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'messages' => ['error' => $e->getMessage()]
+            ];
+        }
     }
 
     function validateAddUser($requestData){
@@ -41,6 +87,7 @@ class UserService extends BaseService
             'zip' => 'max_length[5]|numeric[users.UserZip]',
             'phone' => 'max_length[10]|min_length[10]|numeric[users.UserPhone]|is_unique[users.UserPhone]',
             'fax' => 'max_length[10]|min_length[10]|numeric[users.UserPhone]|is_unique[users.UserFax]',
+            'city' => 'max_length[30]',
             'state' => 'max_length[30]',
             'country' => 'max_length[30]',
             'address' => 'max_length[30]',
@@ -79,8 +126,11 @@ class UserService extends BaseService
                 'numeric' => 'Số fax không đúng định dạng!',
                 'is_unique' => 'Số fax đã được đăng ký!'
             ],
+            'city' => [
+                'max_length' => 'Tên hành phố quá dài!'
+            ],
             'state' => [
-                'max_length' => 'Tỉnh quá dài!'
+                'max_length' => 'Tên tỉnh quá dài!'
             ],
             'address' => [
                 'max_length' => 'Địa chỉ quá dài!'
