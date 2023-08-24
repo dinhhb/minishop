@@ -30,12 +30,17 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'user\HomeController::index');
+$routes->get('error/404', function (){
+    return view('errors/html/error_404');
+});
 
 $routes->group('admin', function($routes){
     $routes->group('user', function($routes){
         $routes->get('list', 'admin\UserController::list'); 
         $routes->get('add', 'admin\UserController::add'); 
         $routes->post('create', 'admin\UserController::create');
+        $routes->get('edit/(:num)', 'admin\UserController::edit/$1');
+        $routes->post('update', 'admin\UserController::update'); 
     });
 
     $routes->group('product', function($routes){

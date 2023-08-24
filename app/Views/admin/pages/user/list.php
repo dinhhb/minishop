@@ -82,7 +82,7 @@
                         <td><?= $user['UserIsAdmin'] ?></td>
                         <td>
                         <!-- <a href="#" class="btn btn-success btn-sm"><i class="fas fa-eye"></i> Xem chi tiết</a> -->
-                          <a href="#" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Sửa</a>
+                          <a href="admin/user/edit/<?= $user['UserID'] ?>" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Sửa</a>
                           <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Xoá</a>
                         </td>               
                       </tr>

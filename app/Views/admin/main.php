@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- daterange picker -->
   <link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker.css">
@@ -233,6 +234,24 @@
     myDropzone.removeAllFiles(true)
   }
   // DropzoneJS Demo Code End
+</script>
+
+<!-- Change password script -->
+<script>
+  $('#change-password').change(function(){
+    let status = !$(this).is(":checked");
+    showChangePass(status);
+  });
+
+  $('#reset-btn-edit-user').click(function (){
+    showChangePass(true);
+  });
+
+  function showChangePass(status){
+    $('#password').prop('readonly', status);
+    $('#password').val('');
+  }
+
 </script>
 
 </body>
